@@ -32,7 +32,6 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
     try {
       const updateData: UpdateUserRequest = {};
 
-      // Só inclui campos que foram modificados
       if (formData.full_name !== user.full_name) {
         updateData.full_name = formData.full_name;
       }
@@ -43,7 +42,6 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
         updateData.password = formData.password;
       }
 
-      // Só faz a requisição se houver campos para atualizar
       if (Object.keys(updateData).length > 0) {
         await onUpdateProfile(updateData);
       }
@@ -98,9 +96,9 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Perfil do Usuário</h2>
+    <div className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto border border-gray-100">
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-3xl font-bold text-gray-900">Perfil do Usuário</h2>
         {!isEditing && (
           <Button variant="outline" onClick={() => setIsEditing(true)}>
             <Edit className="w-4 h-4 mr-2" />
@@ -109,9 +107,9 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
         )}
       </div>
 
-      <div className="mb-6 text-center">
+      <div className="mb-8 text-center">
         <div className="relative inline-block">
-          <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 mx-auto">
+          <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 mx-auto shadow-lg border-4 border-white">
             {getProfilePictureUrl() ? (
               <img
                 src={getProfilePictureUrl()!}
@@ -120,13 +118,13 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-500">
-                <span className="text-2xl">👤</span>
+                <span className="text-4xl">👤</span>
               </div>
             )}
           </div>
           {isEditing && (
-            <label className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors">
-              <Camera className="w-4 h-4" />
+            <label className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors shadow-md border-2 border-white">
+              <Camera className="w-5 h-5" />
               <input
                 type="file"
                 accept="image/*"
@@ -139,7 +137,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
       </div>
 
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <Input
             label="Nome Completo"
             name="full_name"
@@ -190,7 +188,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
             placeholder="Deixe em branco para manter a atual"
           />
 
-          <div className="flex justify-end space-x-3">
+          <div className="flex justify-end space-x-3 pt-2">
             <Button type="button" variant="outline" onClick={cancelEdit}>
               <X className="w-4 h-4 mr-2" />
               Cancelar
@@ -202,22 +200,22 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
           </div>
         </form>
       ) : (
-        <div className="space-y-4">
-          <div>
+        <div className="divide-y divide-gray-200">
+          <div className="py-3">
             <label className="block text-sm font-medium text-gray-500">
               Nome Completo
             </label>
             <p className="text-gray-900">{user.full_name}</p>
           </div>
 
-          <div>
+          <div className="py-3">
             <label className="block text-sm font-medium text-gray-500">
               Nome de Usuário
             </label>
             <p className="text-gray-900">@{user.username}</p>
           </div>
 
-          <div>
+          <div className="py-3">
             <label className="block text-sm font-medium text-gray-500">
               Email
             </label>
@@ -225,22 +223,13 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
           </div>
 
           {user.description && (
-            <div>
+            <div className="py-3">
               <label className="block text-sm font-medium text-gray-500">
                 Descrição
               </label>
               <p className="text-gray-900">{user.description}</p>
             </div>
           )}
-
-          <div>
-            <label className="block text-sm font-medium text-gray-500">
-              Membro desde
-            </label>
-            <p className="text-gray-900">
-              {new Date(user.created_at).toLocaleDateString("pt-BR")}
-            </p>
-          </div>
         </div>
       )}
     </div>

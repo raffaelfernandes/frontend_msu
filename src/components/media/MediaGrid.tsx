@@ -1,11 +1,13 @@
-import React from 'react';
-import { MediaItem } from '../../types';
-import { MediaCard } from './MediaCard';
-import { Loader } from 'lucide-react';
+// src/components/MediaGrid.tsx
+import React from "react";
+import { MediaItem } from "../../types"; // Ajuste o caminho
+import { MediaCard } from "./MediaCard";
+import { Loader } from "lucide-react";
 
 interface MediaGridProps {
   media: MediaItem[];
   isLoading: boolean;
+  // onView, onEdit, onDelete são passados para MediaCard
   onView: (media: MediaItem) => void;
   onEdit: (media: MediaItem) => void;
   onDelete: (mediaId: number) => void;
@@ -14,7 +16,7 @@ interface MediaGridProps {
 export const MediaGrid: React.FC<MediaGridProps> = ({
   media,
   isLoading,
-  onView,
+  onView, // Não usado diretamente aqui, mas repassado
   onEdit,
   onDelete,
 }) => {
@@ -49,7 +51,7 @@ export const MediaGrid: React.FC<MediaGridProps> = ({
         <MediaCard
           key={item.id}
           media={item}
-          onView={onView}
+          onView={onView} // Repassado, mas MediaCard agora usa useNavigate
           onEdit={onEdit}
           onDelete={onDelete}
         />

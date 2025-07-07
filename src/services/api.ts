@@ -232,6 +232,17 @@ class ApiService {
       throw new Error(error.detail || "Delete failed");
     }
   }
+
+  async getMediaStreamUrl(id: number, quality: string): Promise<string> {
+    const response = await fetch(
+      `${API_BASE_URL}${API_ENDPOINTS.MEDIA_STREAM_URL(id, quality)}`,
+      {
+        headers: this.getAuthHeaders(),
+      }
+    );
+    const data = await this.handleResponse<{ url: string }>(response);
+    return data.url;
+  }
 }
 
 export const apiService = new ApiService();
